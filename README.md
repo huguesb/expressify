@@ -2,6 +2,7 @@ Expressify
 ==========
 
 Expressify provides:
+
  * a simple evaluator accepting a large and safe subset of Ruby expressions
  * a couple of custom [Liquid](http://liquidmarkup.org) tags that bring that
  power to Liquid templates (mix of new tags and backward-compatible replacements
