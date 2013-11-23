@@ -112,6 +112,12 @@ module Expressify
             assert_expr({'a' => 1..4}['a'], "{'a' => 1..4}['a']")
         end
 
+        def test_methods
+            assert_expr(['a', 1 ,42].size, "['a', 1 ,42].size")
+            assert_expr('foo'.slice(1), "'foo'.slice(1)")
+            assert_expr('foo'.slice(1, 2), "'foo'.slice(1, 2)")
+        end
+
         def test_liquid_shorthand
             assert_expr("b", "{'a' => 'b'}.a")
         end
@@ -132,6 +138,9 @@ module Expressify
             assert_error("42 <<")
             assert_error("nil + 0")
             assert_error('"foo" == nil')
+            assert_error("nil.size")
+            assert_error("['a', 1 ,42].")
+            assert_error("'foo'.slice(1, )")
         end
     end
 end

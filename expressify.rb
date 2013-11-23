@@ -251,12 +251,12 @@ module Expressify
         def eval_deref(ss, context)
             x = eval_literal(ss, context)
             until (c = read_any(ss, ['.', '['])) == nil
-                p = ss.pos
+                p = ss.pos - 1
                 case c
                 when '.'
-                    error(p, "cannot deref nil") if x == nil
+                    error(p, "left operand nil") if x == nil
                     y = eval_identifier(ss)
-                    # TODO: error checking on empty y
+                    error(p, "right operand nil or empty") if y == nil or y.empty?
 
                     if peek(ss, 1) == '('
                         consume(ss, 1)
@@ -280,7 +280,7 @@ module Expressify
             unless x.respond_to?(y) && whitelisted?(x.class, y)
                 error(p, "no %s method for %s", y, x.class)
             end
-            x.send(y *args)
+            x.send(y, *args)
         end
 
         def resolve_key(x, y)
